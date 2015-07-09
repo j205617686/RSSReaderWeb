@@ -1,0 +1,82 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+   
+<html xmlns = "http://www.w3.org/1999/xhtml">
+   <head>
+     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css"></link>
+	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+	
+	<title>RSS-Jquery-Mobile</title>
+<script type="text/javascript">	
+	
+	
+$(document).ready(function() {
+    $('#submit').click(
+            function() {
+            	var dataf ='rss_url=' + $('#url_input').val();	
+            	
+	$.ajax({
+  url: "reader.do",
+  type: "get",
+  data: dataf,
+  dataType: "JSON",
+  success: function(Jdata) {
+			
+			var rfew = $(ar);
+			
+			console.log(Jdata);
+			
+			$.each(Jdata.list, function(key, value) {
+			console.log(JSON.stringify(value));
+			
+			var singleList = $("<li><a href=\""+value.Link+"\"><h2>"+value.Title+"</h2><p>"+value.Description+"</p></a></li>");
+               
+			 
+				rfew.append(singleList);
+				
+				$('ul').listview('refresh');
+			});
+    
+			
+  },
+  
+  error: function() {
+    alert("ERROR!!!");
+  }
+});
+            });
+            });
+</script>
+	
+	
+   </head>
+   <body>
+		
+		<div data-role="page">
+      <div data-role="header">
+        <h1>Your subscribe RSS is:</h1>
+      </div>
+      <!-- /header -->
+      <div data-role="content">
+        
+         <form method="get">
+			
+				<input name="url_input" id="url_input" type = "url"  required placeholder="Enter your RSS URL" size=40 />
+				<input type="submit" id="submit" value="submit" />
+
+				</form> 
+		  
+		 <ul id="ar" data-role="listview" data-inset="true" data-icon="false">
+		 </ul>
+      </div>
+      <!-- /content -->
+      <div data-role="footer" class="ui-bar"> <a href="#" data-role="button" id="more">more....</a> </div>
+      <!-- /footer --> 
+    </div>
+    <!-- /page -->
+		
+		
+	</body>
+</html>
